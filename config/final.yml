@@ -2,5 +2,5 @@
 blobstore:
   provider: local
   options:
-    blobstore_path: /tmp/anatas-blobs
+    blobstore_path: /tmp/usp-blobs
 final_name: sm-mongo

@@ -1,5 +1,4 @@
 ---
 name: cf-cli
-dependencies: []
 files:
-  - cf-cli/cf-cli-*
+  - cf-cli_6.16.1_linux_x86-64.tgz
