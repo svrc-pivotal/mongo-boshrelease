@@ -1,9 +1,9 @@
 properties:
   mongod: (( grab jobs.mongod.env ))
   cf:
-    api_endpoint: (( grab properties.custom_cf.api_endpoint || "api.bosh-lite.com" ))
+    api_endpoint: (( grab properties.custom_cf.api_endpoint || "api.charlie.skynetinc.io" ))
     skip_ssl_verification: (( grab properties.custom_cf.skip_ssl_verification || true ))
     user: (( grab properties.custom_cf.user || "admin" ))
-    password: (( grab properties.custom_cf.password || "admin" ))
-    org: (( grab properties.custom_cf.org || "foo_org" ))
-    space: (( grab properties.custom_cf.space || "foo_space" ))
+    password: (( grab properties.custom_cf.password || "rickandmorty" ))
+    org: (( grab properties.custom_cf.org || "USP" ))
+    space: (( grab properties.custom_cf.space || "demo" ))

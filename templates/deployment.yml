@@ -1,20 +1,20 @@
 meta:
-  environment: (( param "please set environment" ))
-  stemcell: (( param "please set stemcell" ))
+  environment: (( grab meta.environment ))
+  stemcell: (( grab meta.stemcell ))
 
 name: (( grab meta.environment ))
 
-director_uuid: (( param "please set director_uuid" ))
+director_uuid: (( grab meta.director_uuid ))
 
-releases: (( param "please set release" ))
+releases: (( grab meta.releases ))
 
-jobs: (( param "please set jobs" ))
+jobs: (( grab meta.jobs ))
 
 compilation:
   workers: 6
-  network: sm_mongo1
+  network: (( grab meta.network))
   reuse_compilation_vms: true
-  cloud_properties: (( param "please set compilation cloud properties" ))
+  cloud_properties: (( grab meta.compilation.cloud_properties ))
 
 update:
   canaries: 1
@@ -25,6 +25,6 @@ update:
 
 resource_pools:
   - name: small_z1
-    network: sm_mongo1
+    network: (( grab meta.network))
     stemcell: (( grab meta.stemcell ))
-    cloud_properties: (( param "please set resource_pool cloud properties" ))
+    cloud_properties: (( grab meta.compilation.cloud_properties ))

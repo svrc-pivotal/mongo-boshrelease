@@ -1,33 +1,38 @@
 meta:
-  environment: (( param "please set meta environment" ))
-  dns_root: (( param "please set meta dns_root" ))
-  security_groups: (( param "please set meta security_groups" ))
-  persistent_disk: 4096
-
+  director_uuid: a81cf0b4-e452-43b9-b6a8-b7497b86bac3
+  environment: cf-mongo
+  dns_root: skynetinc.io
+  subnet: subnet-22bd1a55
+  persistent_disk: 16384
+  network: services
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
-
-jobs:
-  - name: mongod
-    networks:
-      - name: sm_mongo1
-    persistent_disk: (( grab meta.persistent_disk ))
+  releases:
+    name: sm-mongo
+    version: latest
 
 compilation:
   cloud_properties:
-    instance_type: m3.medium
+    instance_type: c3.large
 
 resource_pools:
   - name: small_z1
     cloud_properties:
       instance_type: m3.medium
+    security_groups:
+    - bosh-usp01
 
 networks:
-  - name: floating
-    type: vip
-    cloud_properties: {}
-  - name: sm_mongo1
-    type: dynamic
+- name: (( grab meta.network))
+  type: manual
+  subnets:
+  - range: 10.0.16.0/24
+    gateway: 10.0.16.1
+    dns: [10.0.0.2]
+    reserved: ["10.0.16.2 - 10.0.16.219"]
+    static: ["10.0.16.220 - 10.0.16.229"]
     cloud_properties:
-      security_groups: (( grab meta.security_groups ))
+      subnet: (( grab meta.subnet ))
+      security_groups:
+      - bosh-usp01
