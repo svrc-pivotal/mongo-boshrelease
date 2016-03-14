@@ -1,0 +1,20 @@
+systemLog:
+   destination: file
+   path: "<%= p("mongo.MONGODB_SYSTEMLOG") %>"
+   quiet: false
+   logAppend: true
+
+storage:
+  dbPath: "<%= p("mongo.MONGODB_STORAGE_DBPATH") %>"
+  directoryPerDB: true
+  smallFiles: true
+  journal:
+    enabled: true
+
+security:
+  authorization: enabled
+  keyFile: /var/vcap/jobs/mongo/config/mongo-keyfile
+
+net:
+  bindIp: <%= p("mongo.MONGODB_BINDIP") %>
+  port: <%= p("mongo.MONGODB_PORT") %>

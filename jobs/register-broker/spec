@@ -3,7 +3,7 @@ name: register-broker
 packages:
   - cf-cli
   - spruce
-  - cf-mongo-broker-dist
+  - cf-mongo-broker
 templates:
   errand.sh.erb: bin/run
 

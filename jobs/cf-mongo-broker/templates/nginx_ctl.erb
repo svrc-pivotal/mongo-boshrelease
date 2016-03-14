@@ -1,0 +1,29 @@
+#!/bin/bash -e
+
+JOB_DIR=/var/vcap/jobs/cf-mongo-broker
+RUN_DIR=/var/vcap/sys/run/cf-mongo-broker
+LOG_DIR=/var/vcap/sys/log/cf-mongo-broker/nginx
+PID_FILE=$RUN_DIR/nginx.pid
+
+source /var/vcap/packages/mongo-common/utils.sh
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR $LOG_DIR $STORE_DIR
+
+    echo $$ > $PID_FILE
+
+    exec /var/vcap/packages/nginx/sbin/nginx -c $JOB_DIR/config/nginx.conf \
+      >>$LOG_DIR/nginx.stdout.log 2>>$LOG_DIR/nginx.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait $PID_FILE 55
+    ;;
+
+  *)
+    echo "Usage: nginx_ctl {start|stop}"
+    ;;
+
+esac

@@ -1,0 +1,45 @@
+#!/bin/bash -e
+
+JOB_DIR=/var/vcap/jobs/cf-mongo-broker
+RUN_DIR=/var/vcap/sys/run/cf-mongo-broker
+LOG_DIR=/var/vcap/sys/log/cf-mongo-broker
+BIN_DIR=/var/vcap/packages/cf-mongo-broker/bin
+INSTANCE_LOG_DIR=<%= p('mongo.log_directory') %>
+DATA_DIR=<%= p('mongo.data_directory') %>
+STATEFILE_DIR=`dirname <%= p('mongo.statefile_path') %>`
+<% if_p('service-backup.source_folder') do %>
+BACKUP_SOURCE_DIR=<%= p('service-backup.source_folder') %>
+<% end %>
+PIDFILE=$RUN_DIR/unicorn.pid
+
+export PATH=/var/vcap/packages/mongo/bin:$PATH
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "Mongo Broker"
+
+    mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR $INSTANCE_LOG_DIR $STATEFILE_DIR $BACKUP_SOURCE_DIR
+    chown vcap:vcap $RUN_DIR $LOG_DIR $DATA_DIR $INSTANCE_LOG_DIR $STATEFILE_DIR $BACKUP_SOURCE_DIR
+
+    export BROKER_CONFIG_PATH=$JOB_DIR/config/broker.yml
+
+    chpst -u vcap:vcap $BIN_DIR/configmigrator \
+      >> $LOG_DIR/cf-mongo-configmigrator.stdout.log \
+      2>> $LOG_DIR/cf-mongo-configmigrator.stderr.log
+
+    echo $$ > $PIDFILE
+    exec chpst -u vcap:vcap $BIN_DIR/broker \
+      >> $LOG_DIR/cf-mongo-broker.stdout.log \
+      2>> $LOG_DIR/cf-mongo-broker.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE 55
+    ;;
+
+  *)
+    echo "Usage: cf-mongo-broker_ctl {start|stop}"
+    ;;
+
+esac

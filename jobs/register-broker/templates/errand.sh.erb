@@ -5,7 +5,7 @@ set -u # report the usage of uninitialized variables
 
 PATH=$PATH:/var/vcap/packages/cf-cli/bin:/var/vcap/packages/spruce/bin # add `cf` and `spruce` to PATH
 
-builtin cd "$(find /var/vcap/data/packages/cf-mongo-broker-dist -type f -name package.json -printf "%h" -quit)"
+builtin cd "$(find /var/vcap/data/packages/cf-mongo-broker -type f -name package.json -printf "%h" -quit)"
 
 <% if_p('cf.skip_ssl_verification') do %>
 skip_ssl="--skip-ssl-validation "

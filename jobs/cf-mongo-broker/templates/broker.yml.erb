@@ -1,0 +1,45 @@
+---
+<%
+  def discover_external_ip
+    networks = spec.networks.marshal_dump
+    _, network = networks.find do |_name, network_spec|
+      network_spec.default
+    end
+    if !network
+      _, network = networks.first
+    end
+    if !network
+      raise "Could not determine IP via network spec: #{networks}"
+    end
+    network.ip
+  end
+  ip = discover_external_ip
+%>
+
+mongo:
+  service_name: <%= p('mongo.broker.service_name') %>
+  service_id: <%= p('mongo.broker.service_id') %>
+  shared_vm_plan_id: <%= p('mongo.broker.shared_vm_plan_id') %>
+  dedicated_vm_plan_id: <%= p('mongo.broker.dedicated_vm_plan_id') %>
+  host: <%= ip %>
+  data_directory: <%= p('mongo.data_directory') %>
+  mongo_conf_path: <%= p('mongo.conf_path') %>
+  log_directory: <%= p('mongo.log_directory') %>
+  process_check_interval: <%= p('mongo.broker.process_check_interval') %>
+  start_mongo_timeout: <%= p('mongo.broker.start_mongo_timeout') %>
+  service_instance_limit: <%= p('mongo.broker.service_instance_limit') %>
+  dedicated:
+    nodes: <%= p('mongo.broker.dedicated_nodes') %>
+    port: <%= p('mongo.broker.dedicated_port') %>
+    statefile_path: <%= p('mongo.statefile_path') %>
+
+auth:
+  username: <%= p('mongo.broker.auth.username') %>
+  password: <%= p('mongo.broker.auth.password') %>
+
+backend_host: localhost
+backend_port: <%= p('mongo.broker.backend_port') %>
+agent_port: 443
+
+monit_executable_path: /var/vcap/bosh/bin/monit
+mongo_server_executable_path: /var/vcap/packages/mongo/bin/mongo-server

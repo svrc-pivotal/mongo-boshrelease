@@ -1,0 +1,5 @@
+check process mongo
+  with pidfile /var/vcap/sys/run/mongo/mongo.pid
+  start program "/var/vcap/jobs/mongo/bin/monit_debugger mongo_ctl '/var/vcap/jobs/mongo/bin/mongo_ctl start'"
+  stop program "/var/vcap/jobs/mongo/bin/monit_debugger mongo_ctl '/var/vcap/jobs/mongo/bin/mongo_ctl stop'"
+  group vcap

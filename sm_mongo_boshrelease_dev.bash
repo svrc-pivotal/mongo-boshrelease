@@ -55,7 +55,7 @@ prepare_blobs() {
   echo "Preparing all packages..."
 
   #find -path './packages/*' -name prepare -type f -exec bash -c "[ -s ${releasePath}/blobs/${0:2} ] && ( echo $releasePath/blobs/${0:2}; cd ${releasePath}/blobs ; $SHELL ${releasePath}/${0:2} )" {} \;
-  for prep in $(find -path './packages/*' -name prepare -type f)
+  for prep in $(find . -path './packages/*' -name prepare -type f)
   do
     if [ -s ${prep} ]
     then
