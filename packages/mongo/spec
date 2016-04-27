@@ -4,4 +4,4 @@ name: mongo
 dependencies: []
 
 files:
-  - mongod/mongodb-linux-x86_64-ubuntu1404-*.tgz
+  - mongo/mongodb-linux-x86_64-ubuntu1404-*.tgz

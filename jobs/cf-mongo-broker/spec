@@ -15,7 +15,7 @@ templates:
   drain.sh: bin/drain
 
 packages:
-- cf-mongo-broker
+- cf-mongo-broker-dist
 - nginx
 - mongo
 - route-registrar

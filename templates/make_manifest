@@ -2,7 +2,7 @@
 
 set -e
 
-template_prefix="sm-mongo"
+template_prefix="cf-mongo"
 STEMCELL_OS=${STEMCELL_OS:-ubuntu}
 
 infrastructure=$1

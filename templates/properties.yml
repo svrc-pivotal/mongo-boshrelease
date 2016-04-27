@@ -1,14 +1,14 @@
 properties:
   mongo: (( grab jobs.mongo.env ))
   cf:
-    api_endpoint: (( grab properties.custom_cf.api_endpoint || "api.charlie.skynetinc.io" ))
+    api_endpoint: (( grab properties.custom_cf.api_endpoint || "api.alpha.skynetinc.io" ))
     skip_ssl_verification: (( grab properties.custom_cf.skip_ssl_verification || true ))
     user: (( grab properties.custom_cf.user || "admin" ))
     password: (( grab properties.custom_cf.password || "rickandmorty" ))
     org: (( grab properties.custom_cf.org || "USP" ))
     space: (( grab properties.custom_cf.space || "demo" ))
     nats:
-      host: 10.0.16.103
+      host: 10.0.16.113
       port: 4222
       username: nats
       password: rickandmorty

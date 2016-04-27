@@ -12,12 +12,3 @@ while read -rd '' f; do
     seen_dir["${f%/*}"]=1
 done < <(find /var/vcap/data/packages -type f -executable -print0)
 export PATH="${!seen_dir[@]}:$PATH"
-
-#exec chpst -u vcap:vcap "$(find /var/vcap/data/jobs/mongo -type f -name cu_ctl.sh -print -quit)" 1>> "$LOG_DIR/create_user.stdout.log" 2>> "$LOG_DIR/create_user.stderr.log"
-#printf '%s\n' 'use admin' 'db.system.users.find({"user": "<%= p("mongo.MONGODB_USER") %>"}).count()  == 0? db.createUser({"user" : "<%= p("mongo.MONGODB_USER") %>", "pwd" : "<%= p("mongo.MONGODB_PASS") %>", "roles" : ["root"]}) : db.updateUser("<%= p("mongo.MONGODB_USER") %>", {"pwd" : "<%= p("mongo.MONGODB_PASS") %>","roles" : [{ role: "userAdminAnyDatabase", db: "admin" }]});' | mongo -
-
-#echo 'use admin' 'db.system.users.find({"user": "<%= p("mongo.MONGODB_USER") %>"}).count()  == 0? db.createUser({"user" : "<%= p("mongo.MONGODB_USER") %>", "pwd" : "<%= p("mongo.MONGODB_PASS") %>", "roles" : ["root"]}) : db.updateUser("<%= p("mongo.MONGODB_USER") %>", {"pwd" : "<%= p("mongo.MONGODB_PASS") %>","roles" : [{ role: "userAdminAnyDatabase", db: "admin" }]});' > "$LOG_DIR/added_user.js"
-
-exec chpst -u vcap:vcap printf '%s\n' 'use admin;' 'db.createUser({user: "monguser", pwd: "mongpass", roles: ["root"]});' | mongo -
-
-echo "Added user: <%= p("mongo.MONGODB_USER") %>"

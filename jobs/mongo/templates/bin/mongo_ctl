@@ -19,7 +19,7 @@ case $1 in
     ulimit -n 64000
     ulimit -u 64000
 
-    exec chpst -u vcap:vcap mongo \
+    exec chpst -u vcap:vcap mongod \
         --fork \
         --pidfilepath ${PIDFILE} \
         --config ${JOB_DIR}/config/mongo.conf \

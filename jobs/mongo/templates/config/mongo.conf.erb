@@ -11,10 +11,6 @@ storage:
   journal:
     enabled: true
 
-security:
-  authorization: enabled
-  keyFile: /var/vcap/jobs/mongo/config/mongo-keyfile
-
 net:
   bindIp: <%= p("mongo.MONGODB_BINDIP") %>
   port: <%= p("mongo.MONGODB_PORT") %>

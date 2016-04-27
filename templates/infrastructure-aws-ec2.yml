@@ -1,6 +1,6 @@
 meta:
   director_uuid: a81cf0b4-e452-43b9-b6a8-b7497b86bac3
-  environment: cf-mongo
+  environment: alpha-mongo
   dns_root: skynetinc.io
   subnet: subnet-22bd1a55
   persistent_disk: 16384
@@ -9,7 +9,7 @@ meta:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   releases:
-    name: sm-mongo
+    name: cf-mongo
     version: latest
 
 compilation:
@@ -30,8 +30,8 @@ networks:
   - range: 10.0.16.0/24
     gateway: 10.0.16.1
     dns: [10.0.0.2]
-    reserved: ["10.0.16.2 - 10.0.16.219"]
-    static: ["10.0.16.220 - 10.0.16.229"]
+    reserved: ["10.0.16.2 - 10.0.16.239"]
+    static: ["10.0.16.240 - 10.0.16.249"]
     cloud_properties:
       subnet: (( grab meta.subnet ))
       security_groups:
